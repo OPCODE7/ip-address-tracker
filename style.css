@@ -14,13 +14,13 @@
     margin: 0;
 }
 
-body{
+body {
     font-size: 18px;
     font-family: 'Rubik', sans-serif;
     height: 100vh;
 }
 
-.banner{
+.banner {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -28,7 +28,7 @@ body{
     height: 40vh;
 }
 
-.banner__img{
+.banner__img {
     position: absolute;
     top: 0;
     left: 0;
@@ -37,19 +37,19 @@ body{
     height: 100%;
 }
 
-.banner__title{
+.banner__title {
     color: white;
     font-size: 1.5rem;
     margin: 1.5rem 0;
 }
 
-.banner__searcher{
+.banner__searcher {
     width: 80%;
     display: flex;
     align-items: center;
 }
 
-.banner__searcher__input{
+.banner__searcher__input {
     width: 80%;
     border: 0;
     outline: none;
@@ -61,7 +61,12 @@ body{
     font-weight: 600;
 }
 
-.banner__searcher__icon{
+.banner__searcher__input::placeholder {
+    font-size: .9rem;
+    font-weight: 400;
+}
+
+.banner__searcher__icon {
     background-color: #000;
     width: 20%;
     height: 100%;
@@ -74,7 +79,7 @@ body{
     cursor: pointer;
 }
 
-.ip__info{
+.ip__info {
     background-color: white;
     width: 80%;
     height: 40vh;
@@ -88,16 +93,19 @@ body{
     padding: 10px 0;
 }
 
-.ip__info__title{
+.ip__info__title {
     font-size: .7rem;
     text-transform: uppercase;
     color: var(--Dark-Gray);
     font-weight: 700;
 }
 
-.map__section{
+.ip__info__description{
+    color: var(--Very-Dark-Gray);
+}
+
+.map__section {
     background-color: rgb(209, 204, 204);
     width: 100%;
     height: 60vh;
 }
-

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ens>
+<html lang="en>
 <head>
   <meta charset=" UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
 <link rel="stylesheet" href="style.css">
 <title>Frontend Mentor | IP Address Tracker</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 </head>
 
 <body>
@@ -15,22 +15,20 @@
     <img src="images/pattern-bg-mobile.png" alt="banner-pattern" class="banner__img">
     <h1 class="banner__title">IP Address Tracker</h1>
     <div class="banner__searcher">
-      <input type="search" placeholder="Search for any IP address or domain" class="banner__searcher__input"> 
+      <input type="search" placeholder="Search for any IP address or domain" class="banner__searcher__input">
       <div class="banner__searcher__icon">
         <i class="fa-solid fa-angle-right"></i>
       </div>
     </div>
     <div class="ip__info">
       <h4 class="ip__info__title">IP Address</h4>
-      <h3 class="ip__info__description"></h3>
+      <h3 class="ip__info__description" id="ip"></h3>
       <h4 class="ip__info__title">Location</h4>
-      <h3 class="ip__info__description"></h3>
+      <h3 class="ip__info__description" id="location"></h3>
       <h4 class="ip__info__title">Timezone</h4>
-      <h3 class="ip__info__description"></h3>
-      <h4 class="ip__info__title">UTC</h4> <!-- add offset value dynamically using the API -->
-      <h3 class="ip__info__description"></h3>
+      <h3 class="ip__info__description" id="time-zone"></h3>
       <h4 class="ip__info__title">ISP</h4>
-      <h3 class="ip__info__description"></h3>
+      <h3 class="ip__info__description" id="isp"></h3>
     </div>
   </section>
   <section class="map__section">
@@ -38,6 +36,39 @@
   </section>
 
   <script>
+    const d = document;
+    const $ip = d.getElementById("ip"),
+      $location = d.getElementById("location"),
+      $timeZone = d.getElementById("time-zone"),
+      $isp = d.getElementById("isp"),
+      $ipAddress = d.querySelector(".banner__searcher__input"),
+      $ipInfoContainer = d.querySelector(".ip__info");
+    const apiKey = "at_MmZDJfPPAPuKDQFcGgh3GMovtYTfQ";
+
+    async function getIpAdressInfo(url) {
+      try {
+        const res = await fetch(`https://geo.ipify.org/api/v2/country?apiKey=${apiKey}&ipAddress=${$ipAddress.value}`),
+          json = await res.json();
+
+        if (!res.ok) throw { status: res.status, statusText: res.statusText };
+
+        $ip.textContent = json.ip;
+        $location.textContent = json.location.region;
+        $timeZone.textContent = `UTC  ${json.location.timezone}`;
+        $isp.textContent = json.isp;
+
+      } catch (err) {
+        let message = err.statusText || "Ocurrio un error";
+        $ipInfoContainer.innerHTML = `Error ${err.status}: ${message}`;
+
+      }
+    }
+
+    d.addEventListener("click", e => {
+      if (e.target.matches(".banner__searcher__icon")) {
+        getIpAdressInfo();
+      }
+    });
 
   </script>
 
