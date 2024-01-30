@@ -59,6 +59,7 @@ body {
     border-top-left-radius: 5px;
     font-size: 1rem;
     font-weight: 600;
+    cursor: pointer;
 }
 
 .banner__searcher__input::placeholder {
@@ -110,7 +111,7 @@ body {
     height: 60vh;
 }
 
-.loader__container{
+.loader__container {
     width: 100%;
     height: 100%;
     display: flex;
@@ -140,7 +141,7 @@ body {
 }
 
 
-.d-none{
+.d-none {
     display: none;
 }
 
@@ -203,5 +204,32 @@ body {
         text-shadow:
             calc(0*var(--w)) 0 #000, calc(-1*var(--w)) 0 #000, calc(-2*var(--w)) 0 #000, calc(-3*var(--w)) 0 #000, calc(-4*var(--w)) 0 #000,
             calc(-5*var(--w)) 0 #000, calc(-6*var(--w)) 0 #000, calc(-7*var(--w)) 0 #000, calc(-8*var(--w)) 0 #000, calc(-9*var(--w)) -10px #000
+    }
+}
+
+@media(min-width:767px) {
+    .ip__info {
+        height: 20vh;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 1rem;
+    }
+
+    .ip__data__container{
+        width: 25%;
+        height: 60%;
+        border-right: 1px solid var(--Dark-Gray);
+        padding: 0 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+
+    .banner__searcher{
+        width: 40%;
+    }
+
+    .ip__info > div:last-of-type{
+        border-right: none;
     }
 }
