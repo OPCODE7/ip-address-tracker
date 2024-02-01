@@ -92,6 +92,7 @@ body {
     justify-content: space-around;
     align-items: center;
     padding: 10px 0;
+    z-index: 2;
 }
 
 .ip__info__title {
@@ -99,16 +100,31 @@ body {
     text-transform: uppercase;
     color: var(--Dark-Gray);
     font-weight: 700;
+    text-align: center;
 }
 
 .ip__info__description {
     color: var(--Very-Dark-Gray);
+    font-size: 1.2rem;
+    font-weight: 700;
 }
 
 .map__section {
     background-color: rgb(209, 204, 204);
     width: 100%;
     height: 60vh;
+}
+
+.ip__info__error{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: white;
 }
 
 .loader__container {
@@ -140,6 +156,11 @@ body {
     animation: l20 2s infinite linear;
 }
 
+#map{
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
 
 .d-none {
     display: none;
@@ -231,5 +252,9 @@ body {
 
     .ip__info > div:last-of-type{
         border-right: none;
+    }
+
+    .ip__info__title{
+        text-align: start;
     }
 }
