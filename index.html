@@ -59,18 +59,29 @@
       $ipInfoContainer = d.querySelector(".ip__info"),
       $loader = d.querySelector(".loader__container"),
       $errorMessage = d.querySelector(".ip__info__error"),
-      $map = d.getElementById("map");
+      $map = d.getElementById("map"),
+      $btnMakeRequest= d.querySelector(".banner__searcher__icon");
 
     const apiKey = "at_MmZDJfPPAPuKDQFcGgh3GMovtYTfQ";
     let map = new L.map('map');
+
     function ChangeMapView(coords) {
       map.setView(coords, 13);
-      return null;
+      L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+          maxZoom: 19
+        }).addTo(map);
+
+        let myIcon = L.icon({
+          iconUrl: 'images/icon-location.svg',
+          iconSize: [40, 45],
+        });
+        L.marker(coords,{icon: myIcon}).addTo(map);
     }
 
     async function getIpAdressInfo(url) {
       try {
-        const res = await fetch(`https://geo.ipify.org/api/v2/country,city?apiKey=${apiKey}&ipAddress=${$ipAddress.value}`),
+        const res = await fetch(url),
           json = await res.json();
 
         $loader.classList.remove("d-none");
@@ -81,24 +92,14 @@
         $location.textContent = json.location.region;
         $timeZone.textContent = `UTC  ${json.location.timezone} `;
         $isp.textContent = json.isp;
+
         let coords = [json.location.lat, json.location.lng];
         ChangeMapView(coords);
-        L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-          maxZoom: 19
-        }).addTo(map);
-
-        let myIcon = L.icon({
-          iconUrl: 'images/icon-location.svg',
-          iconSize: [30, 40],
-        });
-
-        L.marker(coords,{icon: myIcon}).addTo(map);
-
       } catch (err) {
         let message = err.statusText || "Ocurrio un error";
         $errorMessage.innerHTML = `<p>Error ${err.status}: ${message}</p>`;
         $errorMessage.classList.remove("d-none");
+        ChangeMapView([0,0]);
       } finally {
         setTimeout(() => {
           $loader.classList.add("d-none");
@@ -106,11 +107,8 @@
       };
     }
 
-    d.addEventListener("click", e => {
-      if (e.target.matches(".banner__searcher__icon")) {
-        getIpAdressInfo();
-      }
-    });
+    $btnMakeRequest.addEventListener("click", e =>  getIpAdressInfo(`https://geo.ipify.org/api/v2/country,city?apiKey=${apiKey}&ipAddress=${$ipAddress.value}`));
+    
 
     window.addEventListener("resize", e => {
       if (window.innerWidth >= 767) {
@@ -122,8 +120,10 @@
 
 
     d.addEventListener("keyup", e => {
-      if (e.key === "Enter") getIpAdressInfo();
+      if (e.key === "Enter") $btnMakeRequest.click();
     });
+
+    d.addEventListener("DOMContentLoaded" ,e =>getIpAdressInfo(`https://geo.ipify.org/api/v2/country,city?apiKey=${apiKey}&ipAddress=`));
 
 
   </script>
